@@ -264,6 +264,12 @@ public class TestProperties {
                     1));
         }
 
+            // 12 - Test property - validates default securerandom.strongAlgorithms value.
+            tests.add(Arguments.of("Test-Profile-DefaultStrongAlgorithms",
+                    System.getProperty("test.src") + "/property-java.security",
+                    "securerandom\\.strongAlgorithms: (?=.*NativePRNGBlocking:SUN)(?=.*DRBG:SUN)",
+                    0));
+
         return tests.build();
     }
 
@@ -329,7 +335,6 @@ public class TestProperties {
     }
 
     private static void testStrongAlgorithms() {
-        if (isProviderPresent("OpenJCEPlusFIPS")) {
             String strongAlgorithms = Security.getProperty("securerandom.strongAlgorithms");
             if ((strongAlgorithms != null) && !strongAlgorithms.isEmpty()) {
                 try {
@@ -339,7 +344,6 @@ public class TestProperties {
                     System.out.println("FAILED: " + e.getMessage());
                 }
             }
-        }
     }
 
     public static void main(String[] args) {
